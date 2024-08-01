@@ -1,9 +1,10 @@
 "use strict";
-const totalPrice = ({ price, discount, isInstallment, months, }) => {
-    if (isInstallment) {
-        return (price - price * (discount / 100)) / months;
+const totalPrice = ({ price, discount = 0, isInstallment, months = 12, }) => {
+    if (discount > 1) {
+        discount = discount / 100;
     }
-    return price;
+    const discountedPrice = price - price * discount;
+    return isInstallment ? discountedPrice / months : discountedPrice;
 };
 const price = totalPrice({
     price: 100000,
